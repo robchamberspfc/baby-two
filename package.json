@@ -1,0 +1,22 @@
+{
+  "name": "baby-two",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robchamberspfc/baby-two.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robchamberspfc/baby-two/issues"
+  },
+  "homepage": "https://github.com/robchamberspfc/baby-two#readme",
+  "dependencies": {
+    "eleventy": "^1.0.6"
+  }
+}
