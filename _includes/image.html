@@ -1,0 +1,66 @@
+---
+layout: basic
+---
+
+<div class="container">
+
+    <div class="row row-cols-1 row-cols-md-3 g-3">
+        <div id="col1" class="col">
+            <!-- <div class="card shadow-sm">
+                <img
+                    src="https://raw.githubusercontent.com/robchamberspfc/little-one/master/content/first-month/IMG_20160728_104115390.jpg">
+
+            </div> -->
+        </div>
+        <div id="col2" class="col">
+        </div>
+        <div id="col3" class="col">
+        </div>
+    </div>
+</div>
+
+
+<script>
+    let image1 =
+        "https://github.com/robchamberspfc/little-one-images/blob/master/content/01.%20January%202018/IMG-20180101-WA0010.jpg?raw=true"
+    let image2 =
+        "https://raw.githubusercontent.com/robchamberspfc/little-one/master/content/first-month/IMG_20160728_104115390.jpg"
+
+    let totalImages = 11
+    let number = totalImages / 3
+    console.log(number)
+
+    for (i = 0; i < totalImages; i++) {
+
+
+
+
+
+        if (i < number) {
+            console.log(i + ": column 1")
+            if (i % 2 == 0) {
+                document.getElementById("col1").innerHTML += `<div class="card shadow-sm"><img src="${image1}"></div>`
+            } else {
+                document.getElementById("col1").innerHTML += `<div class="card shadow-sm"><img src="${image2}"></div>`
+            }
+        }
+        if (i > number && i <= 2 * number) {
+            console.log(i + ": column 2")
+            if (i % 2 != 0) {
+                document.getElementById("col2").innerHTML += `<div class="card shadow-sm"><img src="${image1}"></div>`
+            } else {
+                document.getElementById("col2").innerHTML += `<div class="card shadow-sm"><img src="${image2}"></div>`
+            }
+        }
+        if (i >= 2 * number) {
+            console.log(i + ": column 3")
+            if (i % 2 == 0) {
+                document.getElementById("col3").innerHTML += `<div class="card shadow-sm"><img src="${image1}"></div>`
+            } else {
+                document.getElementById("col3").innerHTML += `<div class="card shadow-sm"><img src="${image2}"></div>`
+            }
+        }
+
+
+    }
+</script>
