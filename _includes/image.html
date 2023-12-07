@@ -10,9 +10,10 @@
 <div id="modals"></div>
 
 <script>
-    const API = 'https://api.bytescale.com/v2/accounts/W142iMn/folders/list?folderPath=/Test/Jan-2020'
+    const API = 'https://api.bytescale.com/v2/accounts/W142iMn/folders/list?folderPath='
+    let folder = "/Bertie/First month"
 
-    fetch(API, {
+    fetch(API+folder, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer secret_W142iMnFcisXHgkhyk4e7qjqJicu',
