@@ -37,9 +37,20 @@ layout: basic
 <main class="bg-info">
   <img src="assets/images/header.jpg" style="width:100%">
   <section>
-    <div class="container album py-5 ">
-        {% include 'image.html' %}
+    <div class="container album py-5">
+      <select class="form-select" id="album" onchange="getImages()">
+        <option selected disabled>Choose an album</option>
+      </select>
+      <div class="row row-cols-1 row-cols-md-3 g-3 pt-5">
+        <div id="col1" class="col">
+        </div>
+        <div id="col2" class="col">
+        </div>
+        <div id="col3" class="col">
+        </div>
       </div>
+      <div id="modals"></div>
+    </div>
   </section>
 
   <!-- <div class="album py-5 bg-body-tertiary">
@@ -53,3 +64,82 @@ layout: basic
 
 </div>
 </main>
+<script>
+  const API = 'https://api.bytescale.com/v2/accounts/W142iMn/folders/list?folderPath='
+  let child = "Evelyn"
+
+  let selectMenu = document.getElementById("album");
+
+  fetch(API + "/" + child, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer secret_W142iMnFcisXHgkhyk4e7qjqJicu',
+      },
+    })
+    .then(response => response.json())
+    .then(response => {
+
+      let data = response.items
+      for (i = 0; i < data.length; i++) {
+        let path = data[i].folderPath
+        let name = data[i].settings.description
+
+        selectMenu.options[selectMenu.options.length] = new Option(name, path);
+      }
+
+    }).catch(err => console.error(err));
+
+  getImages = () => {
+
+    let folder = selectMenu.selectedOptions[0].value
+
+    fetch(API + folder, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer secret_W142iMnFcisXHgkhyk4e7qjqJicu',
+        },
+      })
+      .then(response => response.json())
+      .then(response => {
+        let totalImages = response.items.length
+        let number = totalImages / 3
+        for (i = 0; i < totalImages; i++) {
+          let imageID = `${response.items[i].size}-${response.items[i].size}`
+
+          if (i < number) {
+            document.getElementById("col1").innerHTML +=
+              `<div class="card border-0 mb-3">
+                                <img class="border border-white" data-bs-toggle="modal" data-bs-target="#${imageID}" src="https://upcdn.io/W142iMn/thumbnail${response.items[i].filePath}">
+                        </div>`
+          }
+          if (i > number && i <= 2 * number) {
+            document.getElementById("col2").innerHTML +=
+              `<div class="card border-0 mb-3">
+                                <img class="border border-white" data-bs-toggle="modal" data-bs-target="#${imageID}" src="https://upcdn.io/W142iMn/thumbnail${response.items[i].filePath}">
+                        </div>`
+          }
+          if (i >= 2 * number) {
+            document.getElementById("col3").innerHTML +=
+              `<div class="card border-0 mb-3">
+                                <img class="border border-white" data-bs-toggle="modal" data-bs-target="#${imageID}" src="https://upcdn.io/W142iMn/thumbnail${response.items[i].filePath}">
+                        </div>`
+          }
+
+          document.getElementById("modals").innerHTML +=
+            `<div class="modal fade" id="${imageID}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <img style = "max-width:100%" src="https://upcdn.io/W142iMn/image${response.items[i].filePath}">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>`
+        }
+      }).catch(err => console.error(err));
+
+  }
+</script>
